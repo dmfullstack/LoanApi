@@ -7,8 +7,11 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.cg.exception.InvalidTransactionException;
 import com.cg.exception.LoanNotFoundException;
@@ -21,6 +24,7 @@ import com.cg.model.Loan;
 import com.cg.service.BankService;
 
 
+@ExtendWith(SpringExtension.class)
 @TestMethodOrder(OrderAnnotation.class)
 @SpringBootTest
 class LoanApplicationTests {
@@ -35,7 +39,7 @@ class LoanApplicationTests {
 	@Test
 	@Order(1)
 	public void registerTest() throws UserExistException {
-		Authentication auth=new Authentication("s@gmail.com","sachin");
+		Authentication auth=new Authentication("sachin@gmail.com","sachin");
 		assertEquals("You are registered Successfully",bankService.registerUser(auth));
 	}
 	
@@ -60,6 +64,7 @@ class LoanApplicationTests {
 		customer.setSalary(60000);
 		
 		Loan loan=new Loan("car",50000,10);
+		loan.setAccount_no("2244422");
 		customer.setLoan(loan);
 		
 		assertEquals("Loan sanctioned Successfully",bankService.applyLoan(customer));
